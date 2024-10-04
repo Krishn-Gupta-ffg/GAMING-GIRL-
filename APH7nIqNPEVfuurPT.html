@@ -1,0 +1,269 @@
+<html><head><base href="https://websim.creationengine.ai/free-fire-gaming-girl/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fire Gaming Girl - Community Hub</title>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    color: #333;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  header {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+  }
+  h1, h2, h3 {
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .community-section {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input[type="text"], input[type="email"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  input[type="text"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #ff6b6b;
+    box-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+  }
+  .cta-button {
+    display: inline-block;
+    background-color: #ff6b6b;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .cta-button:hover {
+    background-color: #ff4757;
+    transform: translateY(-2px);
+  }
+  .cta-button:active {
+    transform: translateY(0);
+  }
+  .input-icon {
+    position: relative;
+  }
+  .input-icon i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+  }
+  .input-icon input {
+    padding-left: 35px;
+  }
+  .username-suggestions {
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0 0 5px 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    width: calc(100% - 2px);
+    z-index: 10;
+  }
+  .username-suggestions div {
+    padding: 10px;
+    cursor: pointer;
+  }
+  .username-suggestions div:hover {
+    background-color: #f0f0f0;
+  }
+  .username-validation {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #ff4757;
+    display: none;
+  }
+  .username-strength {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  .strength-weak { color: #ff4757; }
+  .strength-medium { color: #ffa502; }
+  .strength-strong { color: #2ed573; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <section class="community-section" id="community">
+      <h2>Join Our Girl Gamer Community</h2>
+      <p>Welcome to the heart of our Free Fire female gaming community! Here, you can connect with other passionate players, share strategies, and forge alliances that will dominate the battlefield. Fill out the form below to become a part of our growing network of fierce gamers!</p>
+      
+      <form id="community-form">
+        <div class="form-group">
+          <label for="username">In-game Username:</label>
+          <div class="input-icon">
+            <i class="fas fa-user"></i>
+            <input type="text" id="username" name="username" required placeholder="Enter your Free Fire username">
+          </div>
+          <div id="username-suggestions" class="username-suggestions"></div>
+          <div id="username-validation" class="username-validation"></div>
+          <div id="username-strength" class="username-strength"></div>
+        </div>
+        <!-- Other form fields remain unchanged -->
+        <button type="submit" class="cta-button">Join the Community</button>
+      </form>
+    </section>
+  </div>
+
+  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('community-form');
+      const usernameInput = document.getElementById('username');
+      const usernameSuggestions = document.getElementById('username-suggestions');
+      const usernameValidation = document.getElementById('username-validation');
+      const usernameStrength = document.getElementById('username-strength');
+      
+      const sampleUsernames = [
+        'FireQueen123', 'GamerGirl2023', 'HeadshotDiva', 'PixelPrincess', 'FragMaster99',
+        'SniperElite22', 'TacticalRose', 'BattleAngel', 'StormyWarrior', 'NinjaGirl007'
+      ];
+
+      function validateUsername(username) {
+        const minLength = 3;
+        const maxLength = 20;
+        const allowedChars = /^[a-zA-Z0-9_]+$/;
+
+        if (username.length < minLength) {
+          return `Username must be at least ${minLength} characters long.`;
+        }
+        if (username.length > maxLength) {
+          return `Username must be no more than ${maxLength} characters long.`;
+        }
+        if (!allowedChars.test(username)) {
+          return 'Username can only contain letters, numbers, and underscores.';
+        }
+        return '';
+      }
+
+      function checkUsernameStrength(username) {
+        let strength = 0;
+        if (username.length >= 8) strength++;
+        if (/[A-Z]/.test(username)) strength++;
+        if (/[0-9]/.test(username)) strength++;
+        if (/[_]/.test(username)) strength++;
+
+        switch(strength) {
+          case 0:
+          case 1:
+            return '<span class="strength-weak">Weak</span>';
+          case 2:
+          case 3:
+            return '<span class="strength-medium">Medium</span>';
+          case 4:
+            return '<span class="strength-strong">Strong</span>';
+        }
+      }
+
+      usernameInput.addEventListener('input', function() {
+        const input = this.value.toLowerCase();
+        const validationMessage = validateUsername(this.value);
+        
+        if (validationMessage) {
+          usernameValidation.textContent = validationMessage;
+          usernameValidation.style.display = 'block';
+        } else {
+          usernameValidation.style.display = 'none';
+        }
+
+        usernameStrength.innerHTML = `Strength: ${checkUsernameStrength(this.value)}`;
+        
+        if (input.length > 2) {
+          const matchedUsernames = sampleUsernames.filter(username => 
+            username.toLowerCase().includes(input)
+          );
+          
+          if (matchedUsernames.length > 0) {
+            usernameSuggestions.innerHTML = matchedUsernames.map(username => 
+              `<div>${username}</div>`
+            ).join('');
+            usernameSuggestions.style.display = 'block';
+          } else {
+            usernameSuggestions.style.display = 'none';
+          }
+        } else {
+          usernameSuggestions.style.display = 'none';
+        }
+      });
+
+      usernameSuggestions.addEventListener('click', function(e) {
+        if (e.target.tagName === 'DIV') {
+          usernameInput.value = e.target.textContent;
+          usernameSuggestions.style.display = 'none';
+          usernameValidation.style.display = 'none';
+          usernameStrength.innerHTML = `Strength: ${checkUsernameStrength(usernameInput.value)}`;
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (e.target !== usernameInput && e.target !== usernameSuggestions) {
+          usernameSuggestions.style.display = 'none';
+        }
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = usernameInput.value;
+        const validationMessage = validateUsername(username);
+        
+        if (validationMessage) {
+          alert(validationMessage);
+          return;
+        }
+        
+        // Simulate form submission
+        const formData = new FormData(form);
+        let formValues = {};
+        for (let [key, value] of formData.entries()) {
+          formValues[key] = value;
+        }
+        
+        console.log('Form submitted:', formValues);
+        
+        // Show a success message
+        alert('Thanks for joining our community, ' + formValues.username + '! We\'ll be in touch soon.');
+        form.reset();
+        usernameStrength.innerHTML = '';
+      });
+    });
+  </script>
+
+</body></html>
